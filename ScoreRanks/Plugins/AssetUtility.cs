@@ -20,14 +20,22 @@ namespace ScoreRanks.Plugins
             {
                 LoadedSprites = new Dictionary<string, Sprite>();
             }
-            if (LoadedSprites.ContainsKey(spriteFilePath))
+            if (LoadedSprites.ContainsKey(spriteFilePath) && LoadedSprites[spriteFilePath] != null)
             {
                 return LoadedSprites[spriteFilePath];
             }
             else if (File.Exists(spriteFilePath))
             {
-                LoadedSprites.Add(spriteFilePath, LoadSpriteFromFile(spriteFilePath));
-                return LoadedSprites[spriteFilePath];
+                var sprite = LoadSpriteFromFile(spriteFilePath);
+                if (LoadedSprites.ContainsKey(spriteFilePath))
+                {
+                    LoadedSprites[spriteFilePath] = sprite;
+                }
+                else
+                {
+                    LoadedSprites.Add(spriteFilePath, sprite);
+                }
+                return sprite;
             }
             // otherwise, the file doesn't exist, log an error, and return null (or hopefully a small transparent sprite
             else

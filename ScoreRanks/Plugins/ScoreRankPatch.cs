@@ -13,6 +13,11 @@ using UnityEngine.UI;
 
 namespace ScoreRanks.Plugins
 {
+    enum ScoreRankSpriteVersion
+    {
+        Big,
+        Small,
+    }
     enum ScoreRank
     {
         None,
@@ -22,7 +27,8 @@ namespace ScoreRanks.Plugins
         GoldMiyabi,
         PinkMiyabi,
         PurpleMiyabi,
-        Kiwami
+        Kiwami,
+        Num,
     }
 
     internal class ScoreRankData
@@ -57,6 +63,7 @@ namespace ScoreRanks.Plugins
         {
             if (NijiroScoringPatch.IsEnabled)
             {
+                InitializeEnsoSprites();
                 var musicInfo = TaikoSingletonMonoBehaviour<CommonObjects>.Instance.MyDataManager.MusicData.GetInfoByUniqueId(__instance.settings.musicUniqueId);
                 var points = SongDataManager.GetSongDataPoints(musicInfo.Id, __instance.settings.ensoPlayerSettings[0].courseType);
                 if (points != null)
@@ -104,7 +111,7 @@ namespace ScoreRanks.Plugins
 
             curPlayer.CurrentScore += score;
 
-            Logger.Log("P" + (__instance.playerNo + 1) + " CurrentScore: " + curPlayer.CurrentScore.ToString());
+            //Logger.Log("P" + (__instance.playerNo + 1) + " CurrentScore: " + curPlayer.CurrentScore.ToString());
 
             var newRank = GetScoreRank(curPlayer);
             if (newRank != curPlayer.CurrentRank)
@@ -125,15 +132,22 @@ namespace ScoreRanks.Plugins
         {
             var parent = GameObject.Find("BaseMain");
 
-            Vector2 DesiredPosition = new Vector2(-267, 0);
+            // RF Values (It's a completely different position, since I don't want to use the crown's size for it)
+            Vector2 DesiredPosition = new Vector2(-321, -35);
             Vector2 RealPosition = new Vector2(DesiredPosition.x + 868, DesiredPosition.y + 224);
 
-            var imageObj = AssetUtility.CreateImageChild(parent, "ScoreRankResult", RealPosition, Path.Combine(Plugin.Instance.ConfigScoreRankAssetFolderPath.Value, "Big", Player1.CurrentRank.ToString() + ".png"));
+            // TDMX Values
+            //Vector2 DesiredPosition = new Vector2(-267, 0);
+            //Vector2 RealPosition = new Vector2(DesiredPosition.x + 868, DesiredPosition.y + 224);
+
+            var imageObj = AssetUtility.CreateImageChild(parent, "ScoreRankResult", RealPosition, GetSpriteFilePath(Player1.CurrentRank, ScoreRankSpriteVersion.Small));
             var image = imageObj.GetComponent<Image>();
             var imageColor = image.color;
             imageColor.a = 0;
             image.color = imageColor;
             Plugin.Instance.StartCoroutine(AssetUtility.ChangeTransparencyOverSeconds(imageObj, 1, true));
+
+
 
             //DesiredPosition = new Vector2(-442, 190);
             //RealPosition = new Vector2(DesiredPosition.x + 868, DesiredPosition.y + 224);
@@ -147,6 +161,18 @@ namespace ScoreRanks.Plugins
             //Plugin.Instance.StartCoroutine(AssetUtility.ChangeTransparencyOverSeconds(imageObj2, 1, true));
         }
 
+        static void InitializeEnsoSprites()
+        {
+            for (ScoreRank i = ScoreRank.WhiteIki; i < ScoreRank.Num; i++)
+            {
+                AssetUtility.LoadSprite(GetSpriteFilePath(i, ScoreRankSpriteVersion.Big));
+            }
+        }
+
+        public static string GetSpriteFilePath(ScoreRank rank, ScoreRankSpriteVersion version)
+        {
+            return Path.Combine(Plugin.Instance.ConfigScoreRankAssetFolderPath.Value, version.ToString(), rank.ToString() + ".png");
+        }
 
         public static void ResetScore()
         {
