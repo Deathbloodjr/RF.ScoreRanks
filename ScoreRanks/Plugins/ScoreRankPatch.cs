@@ -133,7 +133,8 @@ namespace ScoreRanks.Plugins
             var parent = GameObject.Find("BaseMain");
 
             // RF Values (It's a completely different position, since I don't want to use the crown's size for it)
-            Vector2 DesiredPosition = new Vector2(-321, -35);
+            //Vector2 DesiredPosition = new Vector2(-321, -35);
+            Vector2 DesiredPosition = new Vector2(-231, -35);
             Vector2 RealPosition = new Vector2(DesiredPosition.x + 868, DesiredPosition.y + 224);
 
             // TDMX Values
