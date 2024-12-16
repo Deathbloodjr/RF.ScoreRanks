@@ -7,6 +7,8 @@ using BepInEx.Configuration;
 using UnityEngine;
 using System.Collections;
 using ScoreRanks.Plugins;
+using ScoreRanks.Plugins.SongSelect;
+using static ScoreRanks.Plugins.SongSelect.SongSelectPatch;
 
 namespace ScoreRanks
 {
@@ -61,6 +63,8 @@ namespace ScoreRanks
                 bool result = true;
                 // If any PatchFile fails, result will become false
                 result &= PatchFile(typeof(ScoreRankPatch));
+                result &= PatchFile(typeof(SongSelectPatch));
+                result &= PatchFile(typeof(UiSongButtonSetupPatch));
                 if (result)
                 {
                     Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_NAME} is loaded!");

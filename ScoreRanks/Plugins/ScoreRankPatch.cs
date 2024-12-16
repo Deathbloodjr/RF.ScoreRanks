@@ -13,25 +13,9 @@ using UnityEngine.UI;
 
 namespace ScoreRanks.Plugins
 {
-    enum ScoreRankSpriteVersion
-    {
-        Big,
-        Small,
-    }
-    enum ScoreRank
-    {
-        None,
-        WhiteIki,
-        BronzeIki,
-        SilverIki,
-        GoldMiyabi,
-        PinkMiyabi,
-        PurpleMiyabi,
-        Kiwami,
-        Num,
-    }
 
-    internal class ScoreRankData
+
+    internal class ScoreRankPlayerData
     {
         public int CurrentScore = 0;
         public int ScoreRankValue = -1;
@@ -52,8 +36,8 @@ namespace ScoreRanks.Plugins
 
     internal class ScoreRankPatch
     {
-        static ScoreRankData Player1 = new ScoreRankData();
-        static ScoreRankData Player2 = new ScoreRankData();
+        static ScoreRankPlayerData Player1 = new ScoreRankPlayerData();
+        static ScoreRankPlayerData Player2 = new ScoreRankPlayerData();
 
         [HarmonyPatch(typeof(EnsoGameManager))]
         [HarmonyPatch(nameof(EnsoGameManager.ProcLoading))]
@@ -63,7 +47,7 @@ namespace ScoreRanks.Plugins
         {
             if (NijiroScoringPatch.IsEnabled)
             {
-                InitializeEnsoSprites();
+                ScoreRankUtility.InitializeSprites();
                 var musicInfo = TaikoSingletonMonoBehaviour<CommonObjects>.Instance.MyDataManager.MusicData.GetInfoByUniqueId(__instance.settings.musicUniqueId);
                 var points = SongDataManager.GetSongDataPoints(musicInfo.Id, __instance.settings.ensoPlayerSettings[0].courseType);
                 if (points != null)
@@ -107,13 +91,13 @@ namespace ScoreRanks.Plugins
                 return;
             }
             
-            ScoreRankData curPlayer = __instance.playerNo == 0 ? Player1 : Player2;
+            ScoreRankPlayerData curPlayer = __instance.playerNo == 0 ? Player1 : Player2;
 
             curPlayer.CurrentScore += score;
 
             //Logger.Log("P" + (__instance.playerNo + 1) + " CurrentScore: " + curPlayer.CurrentScore.ToString());
 
-            var newRank = GetScoreRank(curPlayer);
+            var newRank = ScoreRankUtility.GetScoreRank(curPlayer);
             if (newRank != curPlayer.CurrentRank)
             {
                 curPlayer.CurrentRank = newRank;
@@ -141,7 +125,7 @@ namespace ScoreRanks.Plugins
             //Vector2 DesiredPosition = new Vector2(-267, 0);
             //Vector2 RealPosition = new Vector2(DesiredPosition.x + 868, DesiredPosition.y + 224);
 
-            var imageObj = AssetUtility.CreateImageChild(parent, "ScoreRankResult", RealPosition, GetSpriteFilePath(Player1.CurrentRank, ScoreRankSpriteVersion.Small));
+            var imageObj = AssetUtility.CreateImageChild(parent, "ScoreRankResult", RealPosition, ScoreRankUtility.GetSpriteFilePath(Player1.CurrentRank, ScoreRankSpriteVersion.Small));
             var image = imageObj.GetComponent<Image>();
             var imageColor = image.color;
             imageColor.a = 0;
@@ -162,18 +146,7 @@ namespace ScoreRanks.Plugins
             //Plugin.Instance.StartCoroutine(AssetUtility.ChangeTransparencyOverSeconds(imageObj2, 1, true));
         }
 
-        static void InitializeEnsoSprites()
-        {
-            for (ScoreRank i = ScoreRank.WhiteIki; i < ScoreRank.Num; i++)
-            {
-                AssetUtility.LoadSprite(GetSpriteFilePath(i, ScoreRankSpriteVersion.Big));
-            }
-        }
-
-        public static string GetSpriteFilePath(ScoreRank rank, ScoreRankSpriteVersion version)
-        {
-            return Path.Combine(Plugin.Instance.ConfigScoreRankAssetFolderPath.Value, version.ToString(), rank.ToString() + ".png");
-        }
+        
 
         public static void ResetScore()
         {
@@ -181,47 +154,7 @@ namespace ScoreRanks.Plugins
             Player2.Reset();
         }
 
-        public static ScoreRank GetScoreRank(ScoreRankData player)
-        {
-            return GetScoreRank(player.CurrentScore, player.ScoreRankValue);
-        }
-
-        public static ScoreRank GetScoreRank(int score, int maxScore)
-        {
-            var ratio = (float)score / (float)maxScore;
-            if (ratio >= 1f)
-            {
-                return ScoreRank.Kiwami;
-            }
-            else if (ratio >= 0.95f)
-            {
-                return ScoreRank.PurpleMiyabi;
-            }
-            else if (ratio >= 0.9f)
-            {
-                return ScoreRank.PinkMiyabi;
-            }
-            else if (ratio >= 0.8f)
-            {
-                return ScoreRank.GoldMiyabi;
-            }
-            else if (ratio >= 0.7f)
-            {
-                return ScoreRank.SilverIki;
-            }
-            else if (ratio >= 0.6f)
-            {
-                return ScoreRank.BronzeIki;
-            }
-            else if (ratio >= 0.5f)
-            {
-                return ScoreRank.WhiteIki;
-            }
-            else
-            {
-                return ScoreRank.None;
-            }
-        }
+        
 
         public static void CreateEnsoScoreRankIcon(ScoreRank scoreRank, int playerNo)
         {
