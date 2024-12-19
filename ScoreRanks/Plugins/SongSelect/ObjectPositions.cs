@@ -157,8 +157,7 @@ namespace ScoreRanks.Plugins.SongSelect
                 {
                     case PositionIdPosition.P1OniSelected:
                         return new ScoreRankPosition( // From Crown position
-                                //new Vector2(-400, 110),
-                                new Vector2(-455, 62),
+                                new Vector2(-451, 62),
                                 new Vector2(1f, 1f));
                     case PositionIdPosition.P1OniUnselected:
                         return new ScoreRankPosition( // From Crown position
@@ -166,8 +165,7 @@ namespace ScoreRanks.Plugins.SongSelect
                                 new Vector2(0.8f, 0.8f));
                     case PositionIdPosition.P1UraSelected:
                         return new ScoreRankPosition( // From Crown position
-                                //new Vector2(-400, 55),
-                                new Vector2(-455, 7),
+                                new Vector2(-451, 7),
                                 new Vector2(1f, 1f));
                     case PositionIdPosition.P1UraUnselected:
                         return new ScoreRankPosition( // From Crown position

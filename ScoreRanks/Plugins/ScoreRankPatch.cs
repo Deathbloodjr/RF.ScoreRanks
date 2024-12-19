@@ -63,11 +63,11 @@ namespace ScoreRanks.Plugins
                     var p2points = SongDataManager.GetSongDataPoints(musicInfo.Id, __instance.settings.ensoPlayerSettings[1].courseType);
                     if (p2points != null)
                     {
-                        Player1.ScoreRankValue = p2points.ScoreRank;
+                        Player2.ScoreRankValue = p2points.ScoreRank;
                     }
                     else
                     {
-                        Player1.ScoreRankValue = -1;
+                        Player2.ScoreRankValue = -1;
                     }
                 }
                 Player1.CurrentScore = 0;
