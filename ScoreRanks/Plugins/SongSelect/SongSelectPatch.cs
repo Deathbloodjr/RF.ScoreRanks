@@ -22,13 +22,13 @@ namespace ScoreRanks.Plugins.SongSelect
             ClearUiSongButtonDictionary();
         }
 
-        [HarmonyPatch(typeof(AllDifficultyScoreBoard))]
-        [HarmonyPatch(nameof(AllDifficultyScoreBoard.Setup))]
+        [HarmonyPatch(typeof(SongSelectSceneUiController))]
+        [HarmonyPatch(nameof(SongSelectSceneUiController.Setup))]
         [HarmonyPatch(MethodType.Normal)]
         [HarmonyPostfix]
-        public static void AllDifficultyScoreBoard_Setup_Postfix(AllDifficultyScoreBoard __instance)
+        public static void SongSelectSceneUiController_Setup_Postfix(SongSelectSceneUiController __instance)
         {
-            SpriteInitialization.InitializeDifficultySprites(__instance);
+            SpriteInitialization.InitializeDifficultySprites(__instance.scoreBoards[0]);
         }
 
         private static void ClearUiSongButtonDictionary()

@@ -1,6 +1,14 @@
 # RF.ScoreRanks
  A Rhythm Festival mod to display what score ranks you've achieved on each song.
  
+  <a href="taikomodmanager:insertGithubLinkhereAndReplaceWithUrlShortener"> <img src="Resources/InstallButton.png" alt="One-click Install using the Taiko Mod Manager" width="256"/> </a>
+  
+ Also requires the NijiiroScoring mod:
+ 
+  <a href="taikomodmanager:insertGithubLinkhereAndReplaceWithUrlShortener"> <img src="Resources/InstallButton.png" alt="One-click Install using the Taiko Mod Manager" width="256"/> </a>
+  
+
+
 # Requirements
  Visual Studio 2022 or newer\
  Taiko no Tatsujin: Rhythm Festival
