@@ -7,8 +7,6 @@ using BepInEx.Configuration;
 using UnityEngine;
 using System.Collections;
 using ScoreRanks.Plugins;
-using ScoreRanks.Plugins.SongSelect;
-using static ScoreRanks.Plugins.SongSelect.SongSelectPatch;
 using SaveProfileManager.Plugins;
 using System.Reflection;
 

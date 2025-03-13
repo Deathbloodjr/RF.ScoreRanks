@@ -12,7 +12,7 @@ using Scripts.UserData;
 using static MusicDataInterface;
 using Scripts.Scene;
 
-namespace ScoreRanks.Plugins.SongSelect
+namespace ScoreRanks.Plugins
 {
     class ScoreRankSongSelect
     {
@@ -42,7 +42,6 @@ namespace ScoreRanks.Plugins.SongSelect
                 }
 
                 var crown = __instance.crowns[(int)i];
-                Logger.Log("parent name: " + crown.name);
 
                 // Set up ScoreRank object and image
                 string scoreRankObjName = "ScoreRank";
@@ -76,7 +75,7 @@ namespace ScoreRanks.Plugins.SongSelect
                 if (newObj is null)
                 {
                     GameObject bgObj = crown.transform.Find("Bg")?.gameObject;
-                    newObj = GameObject.Instantiate(bgObj, crown);
+                    newObj = UnityEngine.Object.Instantiate(bgObj, crown);
                     newObj.name = "BgBackground";
                     newObj.transform.localPosition = backgroundBgPosition;
                     newObj.transform.SetSiblingIndex(0);
@@ -120,7 +119,7 @@ namespace ScoreRanks.Plugins.SongSelect
         [HarmonyPatch(nameof(UiSongButtonDifficulty.Setup))]
         [HarmonyPatch(MethodType.Normal)]
         [HarmonyPostfix]
-        public static void UiSongButtonDifficulty_Setup_Postfix(UiSongButtonDifficulty __instance, MusicDataInterface.MusicInfoAccesser item)
+        public static void UiSongButtonDifficulty_Setup_Postfix(UiSongButtonDifficulty __instance, MusicInfoAccesser item)
         {
             //SceneDataExchanger.Is2PMode;
             if (SceneDataExchanger.Is2PMode)
