@@ -1,12 +1,34 @@
 # RF.ScoreRanks
  A Rhythm Festival mod to display what score ranks you've achieved on each song.
  
-  <a href="taikomodmanager:insertGithubLinkhereAndReplaceWithUrlShortener"> <img src="Resources/InstallButton.png" alt="One-click Install using the Taiko Mod Manager" width="256"/> </a>
+  <a href="https://shorturl.at/9KExC"> <img src="Resources/InstallButton.png" alt="One-click Install using the Taiko Mod Manager" width="256"/> </a>
   
  Also requires the NijiiroScoring mod:
  
-  <a href="taikomodmanager:insertGithubLinkhereAndReplaceWithUrlShortener"> <img src="Resources/InstallButton.png" alt="One-click Install using the Taiko Mod Manager" width="256"/> </a>
+  <a href="https://shorturl.at/C1Ixs"> <img src="Resources/InstallButton.png" alt="One-click Install using the Taiko Mod Manager" width="256"/> </a>
   
+The assets will need to be placed in an Assets directory (location defined in the config file), and layed out as such:
+```
+    Assets/
+    ├── Big/
+    │   ├── None.png
+    │   ├── WhiteIki.png
+    │   ├── BronzeIki.png
+    │   ├── SilverIki.png
+    │   ├── GoldMiyabi.png
+    │   ├── PinkMiyabi.png
+    │   ├── PurpleMiyabi.png
+    │   └── Kiwami.py
+    └── Small/
+        ├── None.png
+        ├── WhiteIki.png
+        ├── BronzeIki.png
+        ├── SilverIki.png
+        ├── GoldMiyabi.png
+        ├── PinkMiyabi.png
+        ├── PurpleMiyabi.png
+        └── Kiwami.py
+```
 
 
 # Requirements
