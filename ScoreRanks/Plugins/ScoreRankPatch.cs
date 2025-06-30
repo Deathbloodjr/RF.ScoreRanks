@@ -173,7 +173,7 @@ namespace ScoreRanks.Plugins
 
             // This position is changed at runtime, but the desired location is -920, 300
             // Adding 1920/2 or 1080/2 will put it at that location
-            var scoreRankObject = AssetUtility.CreateImageChild(canvasFgObject, "ScoreRank", MainPosition + new Vector2(0, -50), Path.Combine(Plugin.Instance.ConfigScoreRankAssetFolderPath.Value, "Big", scoreRank.ToString() + ".png"));
+            var scoreRankObject = AssetUtility.CreateImageChild(canvasFgObject, "ScoreRank", MainPosition + new Vector2(0, -50), Path.Combine(ScoreRankUtility.GetSpriteFilePath(scoreRank, ScoreRankSpriteVersion.Big)));
             var image = scoreRankObject.GetOrAddComponent<Image>();
             var imageColor = image.color;
             imageColor.a = 0;

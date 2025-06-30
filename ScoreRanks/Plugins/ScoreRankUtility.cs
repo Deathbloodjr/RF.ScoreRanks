@@ -39,6 +39,7 @@ namespace ScoreRanks.Plugins
 
         public static string GetSpriteFilePath(ScoreRank rank, ScoreRankSpriteVersion version)
         {
+
             return Path.Combine(Plugin.Instance.ConfigScoreRankAssetFolderPath.Value, version.ToString(), rank.ToString() + ".png");
         }
 

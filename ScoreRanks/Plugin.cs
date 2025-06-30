@@ -81,6 +81,12 @@ namespace ScoreRanks
                 result &= Instance.PatchFile(typeof(ScoreRankSongSelect));
                 if (result)
                 {
+                    // I don't know where I should do initial folder creation at
+                    // Here will do for now
+                    if (!Directory.Exists(Instance.ConfigScoreRankAssetFolderPath.Value))
+                    {
+                        Directory.CreateDirectory(Instance.ConfigScoreRankAssetFolderPath.Value);
+                    }
                     Logger.Log($"Plugin {MyPluginInfo.PLUGIN_NAME} is loaded!");
                 }
                 else
