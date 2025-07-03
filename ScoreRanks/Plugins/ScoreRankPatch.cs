@@ -109,10 +109,10 @@ namespace ScoreRanks.Plugins
         }
 
         [HarmonyPatch(typeof(ResultPlayer))]
-        [HarmonyPatch(nameof(ResultPlayer.DisplayCrown))]
+        [HarmonyPatch(nameof(ResultPlayer.DisplayScore))]
         [HarmonyPatch(MethodType.Normal)]
         [HarmonyPostfix]
-        public static void ResultPlayer_DisplayCrown_Postfix(ResultPlayer __instance)
+        public static void ResultPlayer_DisplayScore_Postfix(ResultPlayer __instance)
         {
             var parent = GameObject.Find("BaseMain");
 
